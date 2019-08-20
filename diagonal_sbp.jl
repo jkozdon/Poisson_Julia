@@ -1,7 +1,5 @@
-using Compat
-import Compat: range, undef
-using Compat.SparseArrays
-using Compat.LinearAlgebra
+using SparseArrays
+using LinearAlgebra
 
 # DIAGONAL_SBP_D1 creates a diagonal norm SBP operator
 # (D, Hinv, H, r) = diagonal_sbp_D1(p, N; xc = (-1,1))
@@ -143,7 +141,7 @@ function diagonal_sbp_D1(p, N; xc = (-1, 1))
              [B_J1[:];B_J2[:];B_J3[:]],
              [B_V1[:];B_V2[:];B_V3[:]]/h, N+1, N+1)
 
-  r = Compat.range(xc[1], stop=xc[2], length=N+1)
+  r = range(xc[1], stop=xc[2], length=N+1)
 
   (D, HI, H, r)
 end
@@ -449,7 +447,7 @@ function diagonal_sbp_D2(p, N; xc = (-1, 1))
   SN = sparse((N+1) * ones(length(BS)), (N+1):-1:(N+2-length(BS)),
               BS[:]/h, N+1, N+1);
 
-  r = Compat.range(xc[1], stop=xc[2], length=N+1)
+  r = range(xc[1], stop=xc[2], length=N+1)
 
   (D, S0, SN, HI, H, r)
 
@@ -462,7 +460,7 @@ end
 # (D, BS, Hinv, H, r) = variable_diagonal_sbp_D2(p, N, B; xc = (-1,1))
 #{{{
 function variable_diagonal_sbp_D2(p, N, B; xc = (-1, 1))
-  r = Compat.range(xc[1], stop=xc[2], length=N+1)
+  r = range(xc[1], stop=xc[2], length=N+1)
   variable_diagonal_sbp_D2(p, N, B(collect(r));xc=xc)
 end
 function variable_diagonal_sbp_D2(p, N, B::T; xc = (-1, 1)) where T <: Number
@@ -736,7 +734,7 @@ function variable_diagonal_sbp_D2(p, N, B::Array{Float64,1}; xc = (-1, 1))
               B[N+1]*BS[:]/h, N+1, N+1);
   D = HI * (-M + SN - S0)
 
-  r = Compat.range(xc[1], stop=xc[2], length=N+1)
+  r = range(xc[1], stop=xc[2], length=N+1)
 
   BS = SN - S0
   (D, BS, HI, H, r)
